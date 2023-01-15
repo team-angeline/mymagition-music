@@ -1,4 +1,5 @@
 import os
+from typing import Dict, Optional, Tuple
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -16,11 +17,43 @@ class Config:
         self.port = int(os.getenv('SERVER_PORT', '8000'))
         self.mode = os.getenv('SERVER_MODE', 'dev')
 
+    def to_app_param(self) -> Optional[Dict]:
+        if self.mode == 'dev':
+            return {
+                'debug': True
+            }
+        elif self.mode == 'prod':
+            return {
+                'redoc_url': None,
+                'openapi_url': None,
+                'docs_url': None,
+            }
+        else:
+            return None
+
+    def to_uvicorn_param(self) -> Optional[Dict]:
+        if self.mode == 'dev':
+            return {
+                'port': self.port,
+                'log_level': 'info',
+            }
+        elif self.mode == 'prod':
+            return {
+                'port': self.port,
+            }
+
 def enroll_routers(app: FastAPI) -> FastAPI:
     for router in API_ROUTERS:
         app.include_router(router)
     return app
 
-def init_app() -> FastAPI:
+def init_app(config: Config) -> Tuple[FastAPI, Dict]:
     init_tmp_dir()
-    return enroll_routers(FastAPI())
+    app_param = config.to_app_param()
+
+    if not app_param:
+        raise ValueError()
+
+    app = FastAPI(**app_param)
+    enroll_routers(app)
+    return app, config.to_uvicorn_param()
