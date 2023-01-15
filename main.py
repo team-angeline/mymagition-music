@@ -9,6 +9,7 @@ if __name__ == '__main__':
     config: Config = Config()
 
     if config.mode == 'dev':
+        app.debug = True
         uvicorn.run('main:app', port=config.port, log_level='info')
     elif config.mode == 'prod':
         app.docs_url = app.redoc_url = None

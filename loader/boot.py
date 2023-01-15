@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from loader.router import API_ROUTERS
+from loader.tmp import init_tmp_dir
 
 
 class Config:
@@ -21,4 +22,5 @@ def enroll_routers(app: FastAPI) -> FastAPI:
     return app
 
 def init_app() -> FastAPI:
+    init_tmp_dir()
     return enroll_routers(FastAPI())
