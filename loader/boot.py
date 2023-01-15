@@ -3,6 +3,7 @@ from typing import Dict, Optional, Tuple
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from loader.router import API_ROUTERS
 from loader.tmp import init_tmp_dir
@@ -42,6 +43,16 @@ class Config:
                 'port': self.port,
             }
 
+def add_middlewares(app: FastAPI) -> FastAPI:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["post"],
+        allow_headers=["*"],
+    )
+    return app
+
 def enroll_routers(app: FastAPI) -> FastAPI:
     for router in API_ROUTERS:
         app.include_router(router)
@@ -55,5 +66,6 @@ def init_app(config: Config) -> Tuple[FastAPI, Dict]:
         raise ValueError()
 
     app = FastAPI(**app_param)
+    add_middlewares(app)
     enroll_routers(app)
     return app, config.to_uvicorn_param()
