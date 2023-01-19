@@ -5,6 +5,9 @@ from werkzeug.datastructures import FileStorage
 
 
 class TmpFileStorage:
+    """
+    임시 파일 저장할 때 사용하는거
+    """
 
     tmp_root: str
     file: FileStorage
@@ -24,9 +27,14 @@ class TmpFileStorage:
     def __str__(self):
         return self.file_root
 
-    def save(self):
+    def save(self, force: bool = False):
         if not os.path.isfile(self.file_root):
             self.file.save(self.file_root)
+        else:
+            if force:
+                # 강제 삭제 후 생성
+                os.remove(self.file_root)
+                self.file.save(self.file_root)
 
     def remove(self):
         if os.path.isfile(self.file_root):
