@@ -1,4 +1,11 @@
-# API Automatic Music
+# mymagition-music
+
+<div align="center">
+    <img src="https://img.shields.io/badge/Python 3.10-FFD43B?style=flat-square&logo=python&logoColor=blue" />
+    <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white" />
+    <img src="https://img.shields.io/badge/Docker-2CA5E0?style=flat-square&logo=docker&logoColor=white" />
+</div>
+
 
 잡동사니 알고리즘 API Service Mymagition에 사용되는 Microservice API
 
@@ -29,9 +36,9 @@ FL Studio에서 Midi 파일의 연속된 피아노 페달을 붙임 없이 임�
 4. ```pip install --upgrade pip```
 5. ```pip install -r requirements.txt```
 6. 아래와 같이 ```.env``` 파일을 작성합니다.
-```bash
-SERVER_PORT="int"
-SERVER_MODE="<개발용일 경우 dev, 배포용일 경우 prod>"
-```
+    ```bash
+    SERVER_PORT="int"
+    SERVER_MODE="<개발용일 경우 dev, 배포용일 경우 prod>"
+    ```
 7. <개발용>일 경우 ```python app.py```
 8. <배포 테스트>일 경우 ```sh bin/run.sh```
