@@ -18,7 +18,8 @@ class TmpFileStorage:
         TmpFileStorage.tmp_root = tmp_root
         if os.path.isdir(tmp_root):
             shutil.rmtree(tmp_root)
-        os.mkdir(tmp_root)
+        else:
+            os.mkdir(tmp_root)
 
     def __init__(self, file: FileStorage):
         self.file = file
