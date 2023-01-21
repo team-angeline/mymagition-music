@@ -1,5 +1,5 @@
-import sys
-
+import os
+from dotenv import load_dotenv
 from flask import Flask
 
 from functions.pcfl.api import pcfl_view
@@ -14,5 +14,15 @@ app.register_blueprint(pcfl_view, url_prefix='/pcfl')
 TmpFileStorage.init_tmpfile('tmp')
 
 if __name__ == '__main__':
-    # DEV용
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    if os.path.isfile('.env'):
+        load_dotenv()
+
+    mode = os.getenv('SERVER_MODE', 'dev')
+    port = int(os.getenv('SERVER_PORT', '5000'))
+
+    if mode not in ('dev', 'prod'):
+        raise ValueError("Select mode (dev or prod)")
+
+    app.run(host='0.0.0.0',
+            port=os.getenv('SERVER_PORT', 5000),
+            debug=(mode == 'dev'))
