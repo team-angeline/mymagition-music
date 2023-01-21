@@ -10,6 +10,9 @@ RUN apt upgrade -y
 COPY . /api
 WORKDIR /api
 
+RUN rm -rf venv
+RUN rm -rf log
+RUN rm -rf tmp
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
