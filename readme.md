@@ -30,6 +30,7 @@ FL Studio에서 Midi 파일의 연속된 피아노 페달을 붙임 없이 임�
 
 
 ## How to install
+### Python Script
 1. Python 3.10.6 이상
 2. Python 가상머신 생성
 3. Submodule과 함께 가져오기 ```git clone [repository] --recursive```
@@ -42,3 +43,8 @@ FL Studio에서 Midi 파일의 연속된 피아노 페달을 붙임 없이 임�
     ```
 7. <개발용>일 경우 ```python app.py```
 8. <배포 테스트>일 경우 ```sh bin/run.sh```
+
+### Docker Container
+```bash
+docker run -e SERVER_PORT={PORT} -p {PORT}:{PORT} -it -d --name {Container Name} ghcr.io/team-angeline/mymagition-music:latest
+```
